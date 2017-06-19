@@ -120,8 +120,11 @@
                         TextColor="White"
                         Text="Pick Photo">
                     </Button>
+                </StackLayout>
+                <StackLayout
+                    Orientation="Horizontal">
                     <Button
-                        HorizontalOptions="FillAndExpand"
+                        HorizontalOptions="CenterAndExpand"
                         Command="{Binding NewContactCommand}"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         BackgroundColor="Navy"
