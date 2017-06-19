@@ -93,7 +93,12 @@ namespace Contacts.ViewModels
             get { return new RelayCommand(TakePicture); } 
         }
 
-		private async void TakePicture()
+        public ICommand PickPhotoCommand
+        {
+            get { return new RelayCommand(PickPhoto); }
+        }
+
+        private async void TakePicture()
 		{
 			await CrossMedia.Current.Initialize();
 
@@ -125,7 +130,37 @@ namespace Contacts.ViewModels
 			IsRunning = false;
 		}
 
-		public ICommand NewContactCommand 
+        private async void PickPhoto()
+        {
+            await CrossMedia.Current.Initialize();
+
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await dialogService.ShowMessage("Photos Not Supported", ":( Permission not granted to photos.");
+                return;
+            }
+
+            file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+            {
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Small,
+            });
+
+            IsRunning = true;
+
+            if (file != null)
+            {
+                ImageSource = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    //file.Dispose();
+                    return stream;
+                });
+            }
+
+            IsRunning = false;
+        }
+
+        public ICommand NewContactCommand 
         { 
             get { return new RelayCommand(NewContact); } 
         }

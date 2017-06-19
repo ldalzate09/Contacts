@@ -112,6 +112,16 @@
                     </Button>
                     <Button
                         HorizontalOptions="FillAndExpand"
+                        Command="{Binding PickPhotoCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        BackgroundColor="Orange"
+                        HeightRequest="40"
+                        BorderRadius="20"
+                        TextColor="White"
+                        Text="Pick Photo">
+                    </Button>
+                    <Button
+                        HorizontalOptions="FillAndExpand"
                         Command="{Binding NewContactCommand}"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         BackgroundColor="Navy"
